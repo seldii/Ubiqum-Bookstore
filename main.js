@@ -10,26 +10,17 @@ fetch(url)
     document.forms["search-book"].querySelector("input").addEventListener('keyup', () => {
       displayBooks(books)
     });
-    let rotateBtns = Array.from(document.getElementsByClassName("rotate-btn"));
-
-    for (var i = 0; i < rotateBtns.length; i++) {
-      //For each element in the container array, add an onclick event.
-      rotateBtns[i].onclick = function (event) {
-        this.parentElement.parentElement.classList.toggle('flipped');
-      }
-
-    }
+   
 
   });
 
 
 function displayBooks(data) {
-  let searchTerm = document.forms["search-book"].querySelector("input").value;
-
+  let searchTerm = document.forms["search-book"].querySelector("input").value.replace(/\s/g,'');
 
 
   filteredBooks = data.filter(book => {
-    let searchBookHere = book.titulo + book.descripcion;
+    let searchBookHere = book.titulo.replace(/\s/g,'') + book.descripcion.replace(/\s/g,'');
     let searchBook = searchTerm.length === 0 || (searchBookHere.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
 
     return searchBook;
@@ -89,7 +80,7 @@ function displayBooks(data) {
   shelves.innerHTML = container;
 
   let modalBodies = Array.from(document.getElementsByClassName("modal-body"));
-  console.log(modalBodies);
+ 
   for (let j = 0; j < modalBodies.length; j++) {
     var carousel = '<div id="carouselControls'+ [j] + '" class="carousel slide" data-ride="carousel" data-pause="true">';
     carousel +=`<div class="carousel-inner">`;
@@ -112,6 +103,16 @@ function displayBooks(data) {
   </div>`
     
     modalBodies[j].innerHTML = carousel;
+
+  }
+
+  let rotateBtns = Array.from(document.getElementsByClassName("rotate-btn"));
+
+  for (var i = 0; i < rotateBtns.length; i++) {
+    //For each element in the container array, add an onclick event.
+    rotateBtns[i].onclick = function (event) {
+      this.parentElement.parentElement.classList.toggle('flipped');
+    }
 
   }
 
